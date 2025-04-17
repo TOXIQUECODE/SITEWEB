@@ -1,180 +1,29 @@
-
-
-
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contrôle Robot</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
-    body {
-      margin: 0;
-      background-image:url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c3c11a4e-961b-47ec-8f72-acebce4c4562/dgd7ll1-ddf39746-ca33-4496-9091-188ab2b79853.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2MzYzExYTRlLTk2MWItNDdlYy04ZjcyLWFjZWJjZTRjNDU2MlwvZGdkN2xsMS1kZGYzOTc0Ni1jYTMzLTQ0OTYtOTA5MS0xODhhYjJiNzk4NTMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.7TzuK1FcNTBrcwPssWy7-BPsSJj9HPdBEV__tMbmg-E');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
-    h1 {
-      color: #FFD700;
-      text-shadow: 0 0 10px #FFD700;
-      font-size: 2.8rem;
-      margin-bottom: 40px;
-    }
-    .control-panel {
-      background: #2a2a2a;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      width: 100%;
-      max-width: 600px;
-    }
-    .slider-container {
-      margin-bottom: 30px;
-    }
-    .slider-wrapper {
-      position: relative;
-      height: 50px;
-    }
-    .slider-value {
-      position: absolute;
-      top: -35px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #FFD700;
-      color: #000;
-      padding: 4px 10px;
-      border-radius: 10px;
-      font-weight: bold;
-      transition: top 0.3s ease, transform 0.3s ease;
-      animation: bounce 0.3s ease;
-    }
-    @keyframes bounce {
-      0%   { transform: translateX(-50%) scale(1); }
-      30%  { transform: translateX(-50%) scale(1.2); }
-      60%  { transform: translateX(-50%) scale(0.95); }
-      100% { transform: translateX(-50%) scale(1); }
-    }
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 12px;
-      border-radius: 6px;
-      background: linear-gradient(to right, #FFD700, #FF8C00);
-      outline: none;
-      transition: background 0.3s ease-in-out;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #fff;
-      cursor: pointer;
-      box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700 inset;
-      transition: transform 0.2s ease;
-    }
-    input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
-    }
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    button {
-      background: #FFD700;
-      color: #111;
-      border: none;
-      padding: 14px 24px;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(255,215,0,0.5);
-    }
-  </style>
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-  <h1>Panneau de Contrôle Robot</h1>
-  <div class="control-panel">
-    <div class="slider-container">
-      <label for="base">Base</label>
-      <div class="slider-wrapper">
-        <div class="slider-value" id="value-base">90</div>
-        <input type="range" id="base" min="0" max="180" value="90" oninput="updateSlider(this)" />
-      </div>
-    </div>
-    <div class="slider-container">
-      <label for="bras">Bras</label>
-      <div class="slider-wrapper">
-        <div class="slider-value" id="value-bras">90</div>
-        <input type="range" id="bras" min="0" max="180" value="90" oninput="updateSlider(this)" />
-      </div>
-    </div>
-    <div class="slider-container">
-      <label for="main">Main</label>
-      <div class="slider-wrapper">
-        <div class="slider-value" id="value-main">90</div>
-        <input type="range" id="main" min="0" max="180" value="90" oninput="updateSlider(this)" />
-      </div>
-    </div>
-    <div class="buttons">
-      <button onclick="sendCommand('home')">🏠 Position Maison</button>
-      <button onclick="sendCommand('balayage')">🔁 Balayage Auto</button>
-    </div>
-  </div>
+  <h1>Contrôle Robot</h1>
+
+  <button id="moveLeft">Déplacer à gauche</button>
+  <button id="moveRight">Déplacer à droite</button>
+
   <script>
-    function updateSlider(slider) {
-      const id = slider.id;
-      const value = slider.value;
-      document.getElementById(`value-${id}`).innerText = value;
+    // Connexion au serveur WebSocket
+    var socket = io();
 
-      const bubble = document.getElementById(`value-${id}`);
-      const percent = (value - slider.min) / (slider.max - slider.min);
-      const sliderWidth = slider.offsetWidth;
-      const bubbleWidth = bubble.offsetWidth;
-      const offset = percent * (sliderWidth - 20) - bubbleWidth / 2 + 10;
-      bubble.style.left = `${offset}px`;
-      bubble.style.animation = 'none';
-      bubble.offsetHeight;
-      bubble.style.animation = null;
+    // Envoyer une commande lorsque l'on clique sur un bouton
+    document.getElementById('moveLeft').addEventListener('click', function() {
+      socket.emit('command', { action: 'move', direction: 'left' });
+    });
 
-      sendSliderCommand();
-    }
-
-    function sendSliderCommand() {
-      const base = document.getElementById("base").value;
-      const bras = document.getElementById("bras").value;
-      const main = document.getElementById("main").value;
-      const url = `/command?mode=slider&base=${base}&bras=${bras}&main=${main}`;
-      fetch(url);
-    }
-
-    function sendCommand(cmd) {
-      const base = document.getElementById("base").value;
-      const bras = document.getElementById("bras").value;
-      const main = document.getElementById("main").value;
-      const url = `/command?mode=${cmd}&base=${base}&bras=${bras}&main=${main}`;
-      fetch(url);
-    }
+    document.getElementById('moveRight').addEventListener('click', function() {
+      socket.emit('command', { action: 'move', direction: 'right' });
+    });
   </script>
 </body>
 </html>
-
-
