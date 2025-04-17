@@ -139,41 +139,42 @@
       <button onclick="sendCommand('balayage')">🔁 Balayage Auto</button>
     </div>
   </div>
-  <script>
-    function updateSlider(slider) {
-      const id = slider.id;
-      const value = slider.value;
-      document.getElementById(`value-${id}`).innerText = value;
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
 
-      const bubble = document.getElementById(`value-${id}`);
-      const percent = (value - slider.min) / (slider.max - slider.min);
-      const sliderWidth = slider.offsetWidth;
-      const bubbleWidth = bubble.offsetWidth;
-      const offset = percent * (sliderWidth - 20) - bubbleWidth / 2 + 10;
-      bubble.style.left = `${offset}px`;
-      bubble.style.animation = 'none';
-      bubble.offsetHeight;
-      bubble.style.animation = null;
+  function updateSlider(slider) {
+    const id = slider.id;
+    const value = slider.value;
+    const bubble = document.getElementById(`value-${id}`);
+    bubble.innerText = value;
 
-      sendSliderCommand();
-    }
+    const percent = (value - slider.min) / (slider.max - slider.min);
+    const sliderWidth = slider.offsetWidth;
+    const bubbleWidth = bubble.offsetWidth;
+    const offset = percent * (sliderWidth - 20) - bubbleWidth / 2 + 10;
+    bubble.style.left = `${offset}px`;
+    bubble.style.animation = 'none';
+    bubble.offsetHeight;
+    bubble.style.animation = null;
 
-    function sendSliderCommand() {
-      const base = document.getElementById("base").value;
-      const bras = document.getElementById("bras").value;
-      const main = document.getElementById("main").value;
-      const url = `/command?mode=slider&base=${base}&bras=${bras}&main=${main}`;
-      fetch(url);
-    }
+    sendSliderCommand();
+  }
 
-    function sendCommand(cmd) {
-      const base = document.getElementById("base").value;
-      const bras = document.getElementById("bras").value;
-      const main = document.getElementById("main").value;
-      const url = `/command?mode=${cmd}&base=${base}&bras=${bras}&main=${main}`;
-      fetch(url);
-    }
-  </script>
+  function sendSliderCommand() {
+    const base = document.getElementById("base").value;
+    const bras = document.getElementById("bras").value;
+    const main = document.getElementById("main").value;
+    socket.emit('commande', { mode: 'slider', base, bras, main });
+  }
+
+  function sendCommand(cmd) {
+    const base = document.getElementById("base").value;
+    const bras = document.getElementById("bras").value;
+    const main = document.getElementById("main").value;
+    socket.emit('commande', { mode: cmd, base, bras, main });
+  }
+</script>
 </body>
 </html>
 
