@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrôle Robot</title>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <h1>Contrôle Robot</h1>
+
+  <button id="moveLeft">Déplacer à gauche</button>
+  <button id="moveRight">Déplacer à droite</button>
+
+  <script>
+    // Connexion au serveur WebSocket
+    var socket = io();
+
+    // Envoyer une commande lorsque l'on clique sur un bouton
+    document.getElementById('moveLeft').addEventListener('click', function() {
+      socket.emit('command', { action: 'move', direction: 'left' });
+    });
+
+    document.getElementById('moveRight').addEventListener('click', function() {
+      socket.emit('command', { action: 'move', direction: 'right' });
+    });
+  </script>
+</body>
+</html>
