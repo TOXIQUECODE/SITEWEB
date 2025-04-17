@@ -1,39 +1,26 @@
-const express = require('express');
-const http = require('http');
 const WebSocket = require('ws');
-
-// Crée une application Express
+const express = require('express');
 const app = express();
 
-// Crée un serveur HTTP en utilisant Express
-const server = http.createServer(app);
+// Créer un serveur WebSocket avec ws://
+const wss = new WebSocket.Server({ noServer: true });
 
-// Crée un serveur WebSocket
-const wss = new WebSocket.Server({ server });
-
-// Lorsque quelqu'un se connecte à notre WebSocket
 wss.on('connection', (ws) => {
-  console.log('Un client est connecté');
-
-  // Envoie un message à l'Arduino lors de la connexion
-  ws.send('home');  // Par exemple, envoie "home" comme test
-
-  // Quand on reçoit un message de l'Arduino
   ws.on('message', (message) => {
-    console.log('Message reçu depuis Arduino:', message);
-  });
-
-  // Quand la connexion se termine
-  ws.on('close', () => {
-    console.log('Client déconnecté');
+    console.log('Message reçu :', message);
+    ws.send('Réponse du serveur');
   });
 });
 
-// Servez les fichiers statiques dans le dossier 'public' (si besoin)
-app.use(express.static('public'));
-
-// Démarre le serveur HTTP sur le port 10000
-const port = process.env.PORT || 10000;
-server.listen(port, () => {
-  console.log(`Serveur WebSocket en écoute sur le port ${port}`);
+// Gérer les connexions WebSocket dans le serveur HTTP
+app.server = app.listen(80, () => {
+  console.log('Serveur démarré sur le port 80');
 });
+
+app.server.on('upgrade', (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.emit('connection', ws, request);
+  });
+});
+
+app.use(express.static('public')); // Sert les fichiers statiques
