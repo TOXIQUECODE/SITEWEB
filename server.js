@@ -27,6 +27,22 @@ app.use(express.static('public'));
 io.on('connection', (socket) => {
   console.log('Un client est connecté');
 
+  // Événement brut (envoyé par l'Arduino)
+  socket.on('message', (data) => {
+    console.log('Message reçu depuis client WebSocket :', data);
+
+    // Ici tu pourrais par exemple renvoyer un accusé de réception :
+    socket.send('OK reçu : ' + data);
+  });
+
+  // Pour tester, envoie un message vers l'Arduino après connexion
+  socket.send("home"); // <- test
+
+  socket.on('disconnect', () => {
+    console.log('Client déconnecté');
+  });
+});
+
   // Écoute un événement 'message' du client
   socket.on('message', (data) => {
     console.log('Message reçu :', data);
