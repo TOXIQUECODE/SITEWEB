@@ -11,13 +11,17 @@ const server = http.createServer(app);
 // Attache Socket.io au serveur HTTP
 const io = socketIo(server);
 
-// Récupère le port à partir de l'environnement ou utilise un port par défaut (par exemple 10000)
+// Récupère le port à partir de l'environnement ou utilise un port par défaut (10000)
 const port = process.env.PORT || 10000;
 
 // Définir une route pour '/'
 app.get('/', (req, res) => {
-  res.send('Hello, world!'); // Simple réponse de test
+  res.sendFile(__dirname + '/public/index.html');  // Serve 'index.html' depuis le dossier 'public'
 });
+
+// Si tu veux aussi servir d'autres fichiers statiques (JS, CSS, etc.)
+// Tu peux utiliser la fonction express.static pour servir un dossier complet.
+app.use(express.static('public'));
 
 // Serveur WebSocket avec Socket.io
 io.on('connection', (socket) => {
