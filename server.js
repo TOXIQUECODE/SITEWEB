@@ -1,31 +1,36 @@
 const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+
+// Crée une application Express
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-const PORT = process.env.PORT || 3000;
 
-// Middleware pour servir les fichiers statiques
-app.use(express.static('public'));
+// Crée un serveur HTTP en utilisant Express
+const server = http.createServer(app);
 
-// Route pour le test
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
+// Attache Socket.io au serveur HTTP
+const io = socketIo(server);
 
-// Socket.io
+// Récupère le port à partir de l'environnement ou utilise un port par défaut (par exemple 10000)
+const port = process.env.PORT || 10000;
+
+// Serveur WebSocket avec Socket.io
 io.on('connection', (socket) => {
-  console.log('Un utilisateur est connecté');
+  console.log('Un client est connecté');
 
-  socket.on('commande', (data) => {
-    console.log('Commande reçue:', data);
-    // Ici tu peux relier à Arduino via Serial si tu veux
+  // Écoute un événement 'message' du client
+  socket.on('message', (data) => {
+    console.log('Message reçu :', data);
+    socket.emit('response', 'Message reçu par le serveur');
   });
 
+  // Lorsqu'un client se déconnecte
   socket.on('disconnect', () => {
-    console.log('Utilisateur déconnecté');
+    console.log('Client déconnecté');
   });
 });
 
-http.listen(PORT, () => {
-  console.log(`Serveur en ligne sur le port ${PORT}`);
+// Démarre le serveur sur le port dynamique
+server.listen(port, () => {
+  console.log(`Serveur WebSocket en écoute sur le port ${port}`);
 });
