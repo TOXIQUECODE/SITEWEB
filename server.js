@@ -14,6 +14,11 @@ const io = socketIo(server);
 // Récupère le port à partir de l'environnement ou utilise un port par défaut (par exemple 10000)
 const port = process.env.PORT || 10000;
 
+// Définir une route pour '/'
+app.get('/', (req, res) => {
+  res.send('Hello, world!'); // Simple réponse de test
+});
+
 // Serveur WebSocket avec Socket.io
 io.on('connection', (socket) => {
   console.log('Un client est connecté');
