@@ -1,48 +1,43 @@
-const express = require('express');
+const WebSocket = require('ws');
 const http = require('http');
-const socketIo = require('socket.io');
 
-// Crée une application Express
-const app = express();
-
-// Crée un serveur HTTP en utilisant Express
-const server = http.createServer(app);
-
-// Attache Socket.io au serveur HTTP
-const io = socketIo(server);
-
-// Récupère le port à partir de l'environnement ou utilise un port par défaut (10000)
-const port = process.env.PORT || 10000;
-
-// Sert les fichiers statiques depuis le dossier 'public'
-app.use(express.static('public'));
-
-// Route principale
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+// Créer un serveur HTTP (optionnel, pour l'usage avec WebSocket)
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Serveur WebSocket en cours d\'exécution\n');
 });
 
-// Serveur WebSocket avec Socket.io
-io.on('connection', (socket) => {
+// Créer le serveur WebSocket
+const wss = new WebSocket.Server({ server });
+
+// Écouter les connexions WebSocket
+wss.on('connection', (ws) => {
   console.log('Un client est connecté');
 
-  // Pour tester, envoie un message vers l'Arduino ou navigateur après connexion
-  socket.send("home");
+  // Lorsqu'un message est reçu du client
+  ws.on('message', (message) => {
+    console.log('Message reçu :', message);
+    
+    // Exemple de traitement du message (ajuste selon ton besoin)
+    if (message === 'home') {
+      console.log('Commande "home" reçue');
+    }
 
-  // Événement de réception de message
-  socket.on('message', (data) => {
-    console.log('Message reçu :', data);
-
-    // Répond au client pour test
-    socket.emit('response', 'Message reçu par le serveur');
+    // Répondre au client
+    ws.send('Message reçu : ' + message);
   });
 
-  socket.on('disconnect', () => {
+  // Lorsqu'un client se déconnecte
+  ws.on('close', () => {
     console.log('Client déconnecté');
   });
+
+  // Envoie un message au client lorsque la connexion est établie
+  ws.send('Connexion WebSocket réussie');
 });
 
-// Démarre le serveur sur le port choisi
+// Démarrer le serveur sur le port 10000 (ou celui que tu as choisi)
+const port = process.env.PORT || 10000;
 server.listen(port, () => {
   console.log(`Serveur WebSocket en écoute sur le port ${port}`);
 });
