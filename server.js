@@ -33,7 +33,7 @@ wss.on('connection', (ws) => {
 app.use(express.static('public'));
 
 // Démarre le serveur HTTP sur le port 10000
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 5995;
 server.listen(port, () => {
   console.log(`Serveur WebSocket en écoute sur le port ${port}`);
 });
