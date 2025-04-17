@@ -1,42 +1,38 @@
-const WebSocket = require('ws');
+const express = require('express');
 const http = require('http');
+const WebSocket = require('ws');
 
-// Créer un serveur HTTP (optionnel, pour l'usage avec WebSocket)
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Serveur WebSocket en cours d\'exécution\n');
-});
+// Crée une application Express
+const app = express();
 
-// Créer le serveur WebSocket
+// Crée un serveur HTTP en utilisant Express
+const server = http.createServer(app);
+
+// Crée un serveur WebSocket
 const wss = new WebSocket.Server({ server });
 
-// Écouter les connexions WebSocket
+// Lorsque quelqu'un se connecte à notre WebSocket
 wss.on('connection', (ws) => {
   console.log('Un client est connecté');
 
-  // Lorsqu'un message est reçu du client
-  ws.on('message', (message) => {
-    console.log('Message reçu :', message);
-    
-    // Exemple de traitement du message (ajuste selon ton besoin)
-    if (message === 'home') {
-      console.log('Commande "home" reçue');
-    }
+  // Envoie un message à l'Arduino lors de la connexion
+  ws.send('home');  // Par exemple, envoie "home" comme test
 
-    // Répondre au client
-    ws.send('Message reçu : ' + message);
+  // Quand on reçoit un message de l'Arduino
+  ws.on('message', (message) => {
+    console.log('Message reçu depuis Arduino:', message);
   });
 
-  // Lorsqu'un client se déconnecte
+  // Quand la connexion se termine
   ws.on('close', () => {
     console.log('Client déconnecté');
   });
-
-  // Envoie un message au client lorsque la connexion est établie
-  ws.send('Connexion WebSocket réussie');
 });
 
-// Démarrer le serveur sur le port 10000 (ou celui que tu as choisi)
+// Servez les fichiers statiques dans le dossier 'public' (si besoin)
+app.use(express.static('public'));
+
+// Démarre le serveur HTTP sur le port 10000
 const port = process.env.PORT || 10000;
 server.listen(port, () => {
   console.log(`Serveur WebSocket en écoute sur le port ${port}`);
