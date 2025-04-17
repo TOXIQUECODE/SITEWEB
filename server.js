@@ -1,31 +1,31 @@
 const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-
-// Créer une application Express
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+const PORT = process.env.PORT || 3000;
 
-// Servir les fichiers statiques (front-end)
+// Middleware pour servir les fichiers statiques
 app.use(express.static('public'));
 
-// Connexion WebSocket
+// Route pour le test
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
+
+// Socket.io
 io.on('connection', (socket) => {
   console.log('Un utilisateur est connecté');
 
-  // Recevoir les commandes du robot depuis le client
-  socket.on('command', (data) => {
-    console.log('Commande reçue :', data);
-    // Ici vous pouvez envoyer des commandes à l'Arduino ou gérer l'état du robot
+  socket.on('commande', (data) => {
+    console.log('Commande reçue:', data);
+    // Ici tu peux relier à Arduino via Serial si tu veux
   });
 
   socket.on('disconnect', () => {
-    console.log('Un utilisateur est déconnecté');
+    console.log('Utilisateur déconnecté');
   });
 });
 
-// Lancer le serveur sur le port 3000
-server.listen(3000, () => {
-  console.log('Le serveur est en cours d\'exécution sur http://localhost:3000');
+http.listen(PORT, () => {
+  console.log(`Serveur en ligne sur le port ${PORT}`);
 });
