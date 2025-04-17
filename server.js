@@ -14,48 +14,35 @@ const io = socketIo(server);
 // Récupère le port à partir de l'environnement ou utilise un port par défaut (10000)
 const port = process.env.PORT || 10000;
 
-// Définir une route pour '/'
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');  // Serve 'index.html' depuis le dossier 'public'
-});
-
-// Si tu veux aussi servir d'autres fichiers statiques (JS, CSS, etc.)
-// Tu peux utiliser la fonction express.static pour servir un dossier complet.
+// Sert les fichiers statiques depuis le dossier 'public'
 app.use(express.static('public'));
+
+// Route principale
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 // Serveur WebSocket avec Socket.io
 io.on('connection', (socket) => {
   console.log('Un client est connecté');
 
-  // Événement brut (envoyé par l'Arduino)
-  socket.on('message', (data) => {
-    console.log('Message reçu depuis client WebSocket :', data);
+  // Pour tester, envoie un message vers l'Arduino ou navigateur après connexion
+  socket.send("home");
 
-    // Ici tu pourrais par exemple renvoyer un accusé de réception :
-    socket.send('OK reçu : ' + data);
-  });
-
-  // Pour tester, envoie un message vers l'Arduino après connexion
-  socket.send("home"); // <- test
-
-  socket.on('disconnect', () => {
-    console.log('Client déconnecté');
-  });
-});
-
-  // Écoute un événement 'message' du client
+  // Événement de réception de message
   socket.on('message', (data) => {
     console.log('Message reçu :', data);
+
+    // Répond au client pour test
     socket.emit('response', 'Message reçu par le serveur');
   });
 
-  // Lorsqu'un client se déconnecte
   socket.on('disconnect', () => {
     console.log('Client déconnecté');
   });
 });
 
-// Démarre le serveur sur le port dynamique
+// Démarre le serveur sur le port choisi
 server.listen(port, () => {
   console.log(`Serveur WebSocket en écoute sur le port ${port}`);
 });
