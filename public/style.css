@@ -217,8 +217,9 @@ nav a.active::after {
 
 .demon-profile h2 {
   font-size: 1.5rem;
-  color: #fff;
+  color: #ef0909;
   margin: 0;
+  text-align: left;
 }
 
 .demon-profile p {
