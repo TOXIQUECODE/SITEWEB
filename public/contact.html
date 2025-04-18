@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,51 +8,50 @@
 </head>
 <body>
 
-  <nav class="main-nav">
-    <div class="nav-logo">🐶 Démons</div>
-    <button class="menu-toggle" aria-label="Menu">&#9776;</button>
-    <div class="nav-links">
-      <a href="index.html" class="nav-link">Accueil</a>
-      <a href="techniques.html" class="nav-link">Techniques</a>
-      <a href="boutique.html" class="nav-link">Boutique</a>
-      <a href="contact.html" class="nav-link">Contact</a>
-      <a href="quiz.html" class="nav-link">Quiz</a>
-    </div>
-  </nav>
+<nav class="main-nav">
+  <div class="nav-logo">🐶 Démons</div>
+  <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Accueil</a>
+    <a href="techniques.html" class="nav-link">Techniques</a>
+    <a href="boutique.html" class="nav-link">Boutique</a>
+    <a href="contact.html" class="nav-link active">Contact</a>
+    <a href="quiz.html" class="nav-link">Quiz</a>
+  </div>
+</nav>
 
+<header class="hero">
+  <h1>Un problème avec votre démon ?</h1>
+  <p>Ne paniquez pas. Nos exorcistes canins sont à votre écoute, 24h/24 (enfin presque).</p>
+</header>
 
-  <header>
-    <h1>Un problème avec votre démon ?</h1>
-    <p>Ne paniquez pas. Nos exorcistes canins sont à votre écoute.</p>
-  </header>
-
-  <section class="contact-section">
+<section class="contact-section">
+  <div class="contact-container">
     <h2>Contacte le Maître des Démons</h2>
-    <p>Une question ? Une plainte contre ton morkie démoniaque ? Laisse-nous un message infernal.</p>
-  
+    <p>Une question ? Une plainte contre ton Morkie démoniaque ? Laisse-nous un message infernal et on t'invoque une réponse rapidement.</p>
+
     <form action="https://formspree.io/f/myzeqbod" method="POST" class="contact-form">
-      <label for="name">Nom</label>
-      <input type="text" id="name" name="name" required>
-  
-      <label for="email">Email</label>
-      <input type="email" id="email" name="_replyto" required>
+      <label for="name">Nom du Maître</label>
+      <input type="text" id="name" name="name" placeholder="Ex : Lucifer Dupont" required>
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
+      <label for="email">Adresse démoniaque (email)</label>
+      <input type="email" id="email" name="_replyto" placeholder="Ex : toi@enfermail.com" required>
 
-      <button type="submit">Envoyer un hurlement</button>
+      <label for="message">Ton message (ou ta malédiction)</label>
+      <textarea id="message" name="message" rows="5" placeholder="Détaille les méfaits de ton Morkie..." required></textarea>
+
+      <button type="submit" class="submit-button">Envoyer un hurlement 🐾</button>
     </form>
-  </section>
+  </div>
+</section>
 
+<footer>
+  &copy; 2025 Dressage des Démons. Tous droits réservés. 🐶🔥
+</footer>
 
-  <footer>
-    &copy; 2025 Dressage des Démons. Tous droits réservés. 🐶🔥
-  </footer>
-  
-  <script>
+<script>
   const toggleButton = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
-
   toggleButton.addEventListener('click', () => {
     navLinks.classList.toggle('show');
   });
