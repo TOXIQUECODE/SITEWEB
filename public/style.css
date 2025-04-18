@@ -43,13 +43,14 @@ section {
 
 .demon-profile {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* On aligne en haut */
   justify-content: flex-start;
   gap: 2rem;
   background-color: rgba(255, 255, 255, 0.05);
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem; /* Ajout d'un espace entre les profils */
 }
 
 .demon-profile img {
@@ -65,14 +66,18 @@ section {
 
 .demon-profile h2 {
   font-size: 1.5rem;
-  color: #fff;
-  margin: 0;
+  color: #ff6666; /* Un rouge doux pour le titre, pour contraster */
+  margin: 0 0 0.5rem 0; /* Espacement sous le titre */
+  text-align: left; /* S'assurer que le texte est bien à gauche */
 }
 
 .demon-profile p {
   font-size: 1rem;
   color: #ccc;
+  margin: 0;
+  line-height: 1.4;
 }
+
 
 footer {
   text-align: center;
