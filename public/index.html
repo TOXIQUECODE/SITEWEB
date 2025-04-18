@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
-  
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dressage des Démons</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  
+
 <nav class="main-nav">
   <div class="nav-logo">🐶 Démons</div>
   <button class="menu-toggle" aria-label="Menu">&#9776;</button>
   <div class="nav-links">
-    <a href="index.html" class="nav-link">Accueil</a>
+    <a href="index.html" class="nav-link active">Accueil</a>
     <a href="techniques.html" class="nav-link">Techniques</a>
     <a href="boutique.html" class="nav-link">Boutique</a>
     <a href="contact.html" class="nav-link">Contact</a>
@@ -21,32 +20,56 @@
   </div>
 </nav>
 
-  
-  <header>
-    <h1>Dressage des Démons</h1>
-    <p>Oui, ils sont mignons. Non, ils n'obéissent pas. Apprenez à survivre.</p>
-  </header>
+<header class="hero">
+  <h1>Dressage des Démons</h1>
+  <p>Oui, ils sont mignons. Non, ils n’obéissent pas. Apprenez à survivre à leur règne poilu.</p>
+  <a href="quiz.html" class="cta-button">Découvre ton démon intérieur</a>
+</header>
 
- <section>
+<section class="intro">
+  <h2>Les Morkies Possédés</h2>
+  <p>Chaque Morkie est unique. Mais certains... sont plus démoniaques que d'autres. Voici nos cas d'étude.</p>
+</section>
+
+<section class="demon-gallery">
+
   <div class="demon-profile">
-    <img src="https://i.ibb.co/PGZqVcpT/0b10e428-27bf-4d8e-937d-1fe8f885d983.jpg" alt="Morkie démoniaque">
+    <img src="https://i.ibb.co/PGZqVcpT/0b10e428-27bf-4d8e-937d-1fe8f885d983.jpg" alt="Morkie démoniaque Boubou">
     <div>
-      <h2>BØubØu</h2>
-      <p>Ce petit ange est passé maître dans l’art de mâchouiller vos câbles. Dressage niveau apocalypse requis.</p>
+      <h3>BØubØu</h3>
+      <p>Petit ange destructeur. Bouffe des câbles, du Wi-Fi et parfois votre patience. Dressage niveau <strong>apocalypse</strong> requis.</p>
     </div>
   </div>
 
+  <div class="demon-profile">
+    <img src="https://i.ibb.co/yBpmd7K/evil-morkie2.jpg" alt="Morkie démoniaque Luna">
+    <div>
+      <h3>LunA</h3>
+      <p>Adorable, jusqu'à ce que vous tourniez le dos. Elle médite sur sa prochaine bêtise depuis son coussin royal.</p>
+    </div>
+  </div>
 
-  <footer>
-    &copy; 2025 Dressage des Démons. Tous droits réservés. 🐶🔥
-  </footer>
-    <script>
+  <div class="demon-profile">
+    <img src="https://i.ibb.co/3TjZ0s3/morkie-possessed.jpg" alt="Morkie démoniaque Diablo">
+    <div>
+      <h3>Diablo</h3>
+      <p>Surnommé “le cyclone”. Capable de transformer votre salon en champ de bataille en moins de 60 secondes.</p>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  &copy; 2025 Dressage des Démons. Tous droits réservés. 🐶🔥
+</footer>
+
+<script>
   const toggleButton = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
-
   toggleButton.addEventListener('click', () => {
     navLinks.classList.toggle('show');
   });
-  </script>
+</script>
+
 </body>
 </html>
