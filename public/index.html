@@ -5,9 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contrôle Robot</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    /* ... (tout ton CSS reste inchangé, donc non répété ici) ... */
-  </style>
+    <style>
+     * { box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
+     body {
+       margin: 0;
+       background-image:url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c3c11a4e-961b-47ec-8f72-acebce4c4562/dgd7ll1-ddf39746-ca33-4496-9091-188ab2b79853.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2MzYzExYTRlLTk2MWItNDdlYy04ZjcyLWFjZWJjZTRjNDU2MlwvZGdkN2xsMS1kZGYzOTc0Ni1jYTMzLTQ0OTYtOTA5MS0xODhhYjJiNzk4NTMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.7TzuK1FcNTBrcwPssWy7-BPsSJj9HPdBEV__tMbmg-E');
+       background-repeat: no-repeat;
+       background-attachment: fixed;
+       background-size: cover;
+       background-position: center;
+       color: #fff;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       padding: 40px 20px;
+     }
+     h1 {
+       color: #FFD700;
+       text-shadow: 0 0 10px #FFD700;
+       font-size: 2.8rem;
+       margin-bottom: 40px;
+     }
+     .control-panel {
+       background: #2a2a2a;
+       border-radius: 20px;
+       padding: 30px;
+       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+       width: 100%;
+       max-width: 600px;
+     }
+     .slider-container {
+       margin-bottom: 30px;
+     }
+     .slider-wrapper {
+       position: relative;
+       height: 50px;
+     }
+     .slider-value {
+       position: absolute;
+       top: -35px;
+       left: 50%;
+       transform: translateX(-50%);
+       background: #FFD700;
+       color: #000;
+       padding: 4px 10px;
+       border-radius: 10px;
+       font-weight: bold;
+       transition: top 0.3s ease, transform 0.3s ease;
+       animation: bounce 0.3s ease;
+     }
+     @keyframes bounce {
+       0%   { transform: translateX(-50%) scale(1); }
+       30%  { transform: translateX(-50%) scale(1.2); }
+       60%  { transform: translateX(-50%) scale(0.95); }
+       100% { transform: translateX(-50%) scale(1); }
+     }
+     input[type="range"] {
+       -webkit-appearance: none;
+       width: 100%;
+       height: 12px;
+       border-radius: 6px;
+       background: linear-gradient(to right, #FFD700, #FF8C00);
+       outline: none;
+       transition: background 0.3s ease-in-out;
+       box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+     }
+     input[type="range"]::-webkit-slider-thumb {
+       -webkit-appearance: none;
+       appearance: none;
+       width: 24px;
+       height: 24px;
+       border-radius: 50%;
+       background: #fff;
+       cursor: pointer;
+       box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700 inset;
+       transition: transform 0.2s ease;
+     }
+     input[type="range"]::-webkit-slider-thumb:hover {
+       transform: scale(1.2);
+     }
+     .buttons {
+       display: flex;
+       justify-content: space-between;
+       flex-wrap: wrap;
+       gap: 15px;
+     }
+     button {
+       background: #FFD700;
+       color: #111;
+       border: none;
+       padding: 14px 24px;
+       border-radius: 12px;
+       font-size: 1rem;
+       font-weight: bold;
+       cursor: pointer;
+       transition: transform 0.2s ease, box-shadow 0.2s ease;
+     }
+     button:hover {
+       transform: translateY(-3px);
+       box-shadow: 0 5px 15px rgba(255,215,0,0.5);
+     }
+   </style>
 </head>
 <body>
   <h1>Panneau de Contrôle Robot</h1>
