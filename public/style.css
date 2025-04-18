@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 :root {
   --main-bg: #f5f5f7;
   --main-text: #1d1d1f;
@@ -16,17 +18,18 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: var(--main-bg);
   color: var(--main-text);
   line-height: 1.6;
 }
 
 header {
-  padding: 2rem 1rem;
-  text-align: center;
+  width: 100%;
   background: white;
   box-shadow: 0 2px 8px var(--box-shadow-light);
+  padding: 2rem 1rem;
+  text-align: center;
 }
 
 header h1 {
@@ -46,70 +49,16 @@ section {
   padding: 0 1rem;
 }
 
-.demon-profile {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 2rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 5px 15px var(--box-shadow-light);
-  margin-bottom: 2rem;
-}
-
-.demon-profile img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.demon-profile div {
-  flex: 1;
-}
-
-.demon-profile h2 {
-  font-size: 1.5rem;
-  color: #a32a2a;
-  margin: 0 0 0.5rem 0;
-}
-
-.demon-profile p {
-  font-size: 1rem;
-  color: #4169e1;
-  margin: 0;
-  line-height: 1.4;
-}
-
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  color: #aaa;
-  background-color: #222;
-}
-
-@media (min-width: 600px) {
-  .demon-profile {
-    flex-direction: row;
-    text-align: left;
-  }
-
-  .demon-profile img {
-    margin-right: 2rem;
-  }
-}
-
 /* Navigation */
 .main-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background-color: #111;
+  background-color: var(--nav-bg);
   color: white;
   max-width: 1200px;
-  margin: 0 auto; /* Centre la nav */
+  margin: 0 auto;
   flex-wrap: wrap;
 }
 
@@ -141,37 +90,10 @@ footer {
 }
 
 .nav-link:hover {
-  color: #ff4747;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  .nav-links.show {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .main-nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  color: var(--link-hover);
 }
 
 @media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
   .nav-links {
     display: none;
     flex-direction: column;
@@ -189,9 +111,70 @@ footer {
     display: flex;
   }
 
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .nav-link {
     padding: 10px 0;
   }
+}
+
+.demon-profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px var(--box-shadow-light);
+  margin-bottom: 2rem;
+}
+
+.demon-profile img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.demon-profile div {
+  flex: 1;
+}
+
+.demon-profile h2 {
+  font-size: 1.5rem;
+  color: #a32a2a;
+  margin-bottom: 0.5rem;
+}
+
+.demon-profile p {
+  font-size: 1rem;
+  color: #4169e1;
+  line-height: 1.4;
+}
+
+@media (min-width: 600px) {
+  .demon-profile {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .demon-profile img {
+    margin-right: 2rem;
+  }
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #aaa;
+  background-color: #222;
 }
 
 /* Techniques Section */
