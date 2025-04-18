@@ -5,13 +5,13 @@ import { WebSocketServer } from 'ws';
 const app = express();
 const port = process.env.PORT || 10000;
 
-// Serve les fichiers statiques (facultatif)
+// Serve les fichiers statiques (facultatif, tu peux l'enlever si non nécessaire)
 app.use(express.static('public'));
 
 // Crée le serveur HTTP
 const server = http.createServer(app);
 
-// Crée le serveur WebSocket
+// Crée le serveur WebSocket sans SSL
 const wss = new WebSocketServer({ server, path: '/socket' });
 
 // Événement lorsqu'un client se connecte
@@ -34,7 +34,7 @@ wss.on('connection', (ws) => {
   });
 });
 
-// Lancer le serveur HTTP
+// Lancer le serveur HTTP (pas HTTPS)
 server.listen(port, () => {
-  console.log(`🚀 Serveur prêt sur le port ${port}`);
+  console.log(`🚀 Serveur HTTP prêt sur le port ${port}`);
 });
