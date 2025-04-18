@@ -1,30 +1,47 @@
-<script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io();
+  // Création d'une connexion WebSocket native
+  const socket = new WebSocket(`ws://${location.host}`);
 
-  // Exemple : récupérer les sliders
+  // Sliders
   const baseSlider = document.getElementById("baseSlider");
   const brasSlider = document.getElementById("brasSlider");
   const mainSlider = document.getElementById("mainSlider");
 
-  // Fonction pour envoyer les valeurs au serveur via WebSocket
+  // Fonction pour envoyer les valeurs au serveur
   function envoyerSliders() {
     const base = baseSlider.value;
     const bras = brasSlider.value;
     const main = mainSlider.value;
 
     const message = `slider=base:${base}&bras:${bras}&main:${main}`;
-    socket.send(message); // Envoi vers le serveur
-    console.log("Message envoyé :", message);
+    
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(message);
+      console.log("Message envoyé :", message);
+    } else {
+      console.warn("WebSocket non prêt");
+    }
   }
 
-  // Ajouter des écouteurs sur les sliders
+  // Ajouter les écouteurs
   baseSlider.addEventListener("input", envoyerSliders);
   brasSlider.addEventListener("input", envoyerSliders);
   mainSlider.addEventListener("input", envoyerSliders);
 
-  // Réception d'une réponse du serveur
-  socket.on("message", (msg) => {
-    console.log("Réponse du serveur :", msg);
-  });
+  // Réception de messages du serveur
+  socket.onmessage = (event) => {
+    console.log("Réponse du serveur :", event.data);
+  };
+
+  socket.onopen = () => {
+    console.log("🟢 WebSocket connecté");
+  };
+
+  socket.onclose = () => {
+    console.log("🔴 WebSocket déconnecté");
+  };
+
+  socket.onerror = (err) => {
+    console.error("⚠️ Erreur WebSocket :", err);
+  };
 </script>
