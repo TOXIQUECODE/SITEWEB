@@ -1,64 +1,37 @@
 import express from 'express';
-import { WebSocketServer } from 'ws';
 import http from 'http';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { WebSocketServer } from 'ws';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 
-// Configuration pour __dirname avec ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Serve les fichiers statiques si besoin (ex: frontend)
+app.use(express.static('public'));
 
-// Sert les fichiers statiques (ton interface HTML + CSS + JS)
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Route fallback pour toujours envoyer le HTML principal
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Crée un serveur HTTP partagé
+// Crée le serveur HTTP
 const server = http.createServer(app);
 
-// WebSocket Server sur la même instance
-const wss = new WebSocketServer({ server, path: "/socket" });
+// Crée le WebSocketServer
+const wss = new WebSocketServer({ server, path: '/socket' });
 
 wss.on('connection', (ws) => {
-  console.log('✅ Nouvelle connexion WebSocket !');
+  console.log('🔌 Nouveau client WebSocket connecté');
 
-  ws.on('message', (msg) => {
-    const message = msg.toString();
-    console.log('📨 Reçu :', message);
+  ws.on('message', (message) => {
+    console.log('📨 Message reçu :', message.toString());
 
-    if (message === 'PING') {
-      ws.send('PONG');
-    } else if (message === 'HELLO_ARDUINO') {
-      ws.send('👋 Hello Arduino!');
-    } else {
-      // Tu peux gérer ici les JSON envoyés par les sliders
-      try {
-        const data = JSON.parse(message);
-        if (data.mode === 'slider') {
-          console.log(`🔧 Commande sliders - Base: ${data.base}, Bras: ${data.bras}, Main: ${data.main}`);
-          ws.send(`🎛️ Commande reçue : base=${data.base}, bras=${data.bras}, main=${data.main}`);
-        } else {
-          console.log(`🔁 Commande spéciale : ${data.mode}`);
-          ws.send(`🔁 Action ${data.mode} en cours...`);
-        }
-      } catch (e) {
-        console.warn('⚠️ Message non compris :', message);
-      }
+    // Répondre si besoin
+    if (message.toString() === 'HELLO_ARDUINO') {
+      ws.send('HELLO_CLIENT');
     }
   });
 
   ws.on('close', () => {
-    console.log('❌ Client déconnecté');
+    console.log('❌ Client WebSocket déconnecté');
   });
 });
 
-// Lance le serveur
-server.listen(PORT, () => {
-  console.log(`🚀 Serveur prêt sur le port ${PORT}`);
+// Lancer le serveur HTTP
+server.listen(port, () => {
+  console.log(`🚀 Serveur prêt sur le port ${port}`);
 });
