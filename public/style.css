@@ -42,38 +42,36 @@ section {
 }
 
 .demon-profile {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-  margin-bottom: 2rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  transition: transform 0.3s;
-}
-
-.demon-profile:hover {
-  transform: translateY(-5px);
+  justify-content: flex-start;
+  gap: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .demon-profile img {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  margin-bottom: 1rem;
+  object-fit: cover;
+}
+
+.demon-profile div {
+  flex: 1;
 }
 
 .demon-profile h2 {
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 0;
 }
 
 .demon-profile p {
   font-size: 1rem;
-  color: #555;
+  color: #ccc;
 }
 
 footer {
