@@ -1,28 +1,36 @@
 import express from 'express';
 import http from 'http';
+import https from 'https';
+import fs from 'fs';
 import { WebSocketServer } from 'ws';
 
+// Création de l'application Express
 const app = express();
 const port = process.env.PORT || 10000;
 
-// Serve les fichiers statiques (facultatif, tu peux l'enlever si non nécessaire)
+// Utilisation des fichiers statiques (si besoin)
 app.use(express.static('public'));
 
-// Crée le serveur HTTP
-const server = http.createServer(app);
+// Chemin vers le certificat SSL et la clé privée
+const privateKey = fs.readFileSync('path/to/private-key.pem', 'utf8');
+const certificate = fs.readFileSync('path/to/certificate.pem', 'utf8');
+const ca = fs.readFileSync('path/to/ca.pem', 'utf8');
 
-// Crée le serveur WebSocket sans SSL
+// Créer le serveur HTTPS
+const credentials = { key: privateKey, cert: certificate, ca: ca };
+const server = https.createServer(credentials, app);
+
+// Créer le serveur WebSocket sécurisé
 const wss = new WebSocketServer({ server, path: '/socket' });
 
-// Événement lorsqu'un client se connecte
 wss.on('connection', (ws) => {
   console.log('🔌 Nouveau client WebSocket connecté');
 
-  // Quand un message est reçu
+  // Quand un message est reçu du client
   ws.on('message', (message) => {
     console.log('📨 Message reçu :', message.toString());
 
-    // Répondre si on reçoit "HELLO_ARDUINO"
+    // Répondre si besoin
     if (message.toString() === 'HELLO_ARDUINO') {
       ws.send('HELLO_CLIENT');
     }
@@ -34,7 +42,7 @@ wss.on('connection', (ws) => {
   });
 });
 
-// Lancer le serveur HTTP (pas HTTPS)
+// Lancer le serveur HTTPS
 server.listen(port, () => {
-  console.log(`🚀 Serveur HTTP prêt sur le port ${port}`);
+  console.log(`🚀 Serveur HTTPS prêt sur le port ${port}`);
 });
