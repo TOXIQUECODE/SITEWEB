@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz - Quel Démon est ton Morkie ?</title>
+    <link rel="stylesheet" href="quiz-style.css" />
+</head>
+<body>
+    <header>
+        <h1>Quel Démon est ton Morkie ?</h1>
+        <p>Réponds aux questions et découvre quel démon habite ton Morkie !</p>
+    </header>
+
+    <section class="quiz-container">
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. Ton Morkie préfère-t-il...</p>
+                <label><input type="radio" name="q1" value="A" /> Mordre les câbles électriques</label>
+                <label><input type="radio" name="q1" value="B" /> Dormir sur le canapé toute la journée</label>
+                <label><input type="radio" name="q1" value="C" /> Dévorer tes chaussettes</label>
+            </div>
+
+            <div class="question">
+                <p>2. Quand tu laisses ton Morkie sans surveillance...</p>
+                <label><input type="radio" name="q2" value="A" /> Il dévore tout ce qui est à sa portée</label>
+                <label><input type="radio" name="q2" value="B" /> Il fait une sieste de 12 heures</label>
+                <label><input type="radio" name="q2" value="C" /> Il disparaît et revient avec un trésor (chaussures, papier toilette, etc.)</label>
+            </div>
+
+            <div class="question">
+                <p>3. Comment réagit ton Morkie quand tu essaies de le dresser ?</p>
+                <label><input type="radio" name="q3" value="A" /> Il m'ignore royalement</label>
+                <label><input type="radio" name="q3" value="B" /> Il fait le contraire de ce que je lui demande</label>
+                <label><input type="radio" name="q3" value="C" /> Il me regarde comme s'il allait dominer le monde</label>
+            </div>
+
+            <button type="submit">Obtenir mon résultat !</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </section>
+
+    <footer>
+        &copy; 2025 Dressage des Démons. Tous droits réservés. 🐶🔥
+    </footer>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
