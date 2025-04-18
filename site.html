@@ -13,17 +13,26 @@
   <button id="moveRight">Déplacer à droite</button>
 
   <script>
-    // Connexion au serveur WebSocket
-    var socket = io();
+  const socket = new WebSocket('ws://localhost:8080');
 
-    // Envoyer une commande lorsque l'on clique sur un bouton
-    document.getElementById('moveLeft').addEventListener('click', function() {
-      socket.emit('command', { action: 'move', direction: 'left' });
-    });
+  socket.onopen = () => {
+    console.log('Connexion WebSocket établie');
+    socket.send('Bonjour serveur');
+  };
 
-    document.getElementById('moveRight').addEventListener('click', function() {
-      socket.emit('command', { action: 'move', direction: 'right' });
-    });
-  </script>
+  socket.onmessage = (event) => {
+    console.log('Message reçu du serveur :', event.data);
+    // Affichez le message dans l'interface utilisateur
+    document.getElementById('messages').innerHTML += `<p>${event.data}</p>`;
+  };
+
+  socket.onerror = (error) => {
+    console.error('Erreur WebSocket :', error);
+  };
+
+  socket.onclose = () => {
+    console.log('Connexion WebSocket fermée');
+  };
+</script>
 </body>
 </html>
