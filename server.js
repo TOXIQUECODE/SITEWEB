@@ -1,58 +1,40 @@
-const WebSocket = require('ws');
-const express = require('express');
-const app = express();
+import express from 'express';
+import { WebSocketServer } from 'ws';
+import http from 'http';
 
-// Créer un serveur HTTPS avec Express (Render gère les certificats SSL automatiquement)
-const server = app.listen(process.env.PORT, () => {
-  console.log(`Serveur démarré sur le port ${process.env.PORT}`);
+const app = express();
+const PORT = process.env.PORT || 443;
+
+// Express route de test (optionnel)
+app.get('/', (req, res) => {
+  res.send('Serveur WebSocket OK');
 });
 
-// Créer un serveur WebSocket sécurisé (WSS) en associant avec le serveur HTTPS
-const wss = new WebSocket.Server({ server });
+// Crée un serveur HTTP (Render s’occupe du SSL)
+const server = http.createServer(app);
 
-// Lorsqu'un client se connecte
+// Crée le WebSocket Server
+const wss = new WebSocketServer({ server, path: "/socket" });
+
 wss.on('connection', (ws) => {
-  console.log('✅ Nouvelle connexion WebSocket');
+  console.log('✅ Nouvelle connexion WebSocket !');
 
-  // Buffer pour accumuler les données partiellement reçues
-  let messageBuffer = '';
+  ws.on('message', (msg) => {
+    console.log('📨 Reçu :', msg.toString());
 
-  // Lorsqu’un message arrive (peut être un fragment)
-  ws.on('message', (data) => {
-    messageBuffer += data.toString(); // Convertit Buffer en string et ajoute au buffer
-
-    // Traite tous les messages complets (terminés par \n)
-    let index;
-    while ((index = messageBuffer.indexOf('\n')) !== -1) {
-      const raw = messageBuffer.slice(0, index);
-      messageBuffer = messageBuffer.slice(index + 1);
-
-      try {
-        const json = JSON.parse(raw);
-        console.log("📨 JSON reçu :", json);
-
-        // 🔁 Exemple de traitement : on renvoie une confirmation
-        ws.send(JSON.stringify({ status: "ok", mode: json.mode || "inconnu" }));
-      } catch (err) {
-        console.warn("⚠️ JSON invalide reçu :", raw);
-      }
+    if (msg.toString() === 'PING') {
+      ws.send('PONG');
+    }
+    if (msg.toString() === 'HELLO_ARDUINO') {
+      ws.send('👋 Hello Arduino!');
     }
   });
 
-  // Gérer la fermeture
   ws.on('close', () => {
-    console.log('🔴 Connexion WebSocket fermée');
-  });
-
-  ws.on('error', (err) => {
-    console.error('❌ Erreur WebSocket :', err);
+    console.log('❌ Client déconnecté');
   });
 });
 
-// Servir les fichiers statiques dans le dossier 'public'
-app.use(express.static('public'));
-
-// Exemple de route
-app.get('/', (req, res) => {
-  res.send('Bienvenue sur le serveur sécurisé !');
+server.listen(PORT, () => {
+  console.log(`🚀 Serveur prêt sur le port ${PORT}`);
 });
