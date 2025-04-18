@@ -138,12 +138,13 @@
   </div>
 
   <script>
-    // Connexion WebSocket (adresse adaptée dynamiquement)
+    const wsStatus = document.getElementById('ws-status');
     const socket = new WebSocket("wss://siteweb-r1pf.onrender.com/");
-
 
     socket.onopen = () => {
       console.log("🟢 WebSocket connecté");
+      wsStatus.textContent = "🟢 Connecté";
+      wsStatus.style.color = "#0f0";
     };
 
     socket.onmessage = (event) => {
@@ -152,6 +153,8 @@
 
     socket.onclose = () => {
       console.log("🔴 WebSocket déconnecté");
+      wsStatus.textContent = "🔴 Déconnecté";
+      wsStatus.style.color = "#f00";
     };
 
     socket.onerror = (err) => {
@@ -164,14 +167,15 @@
       const bubble = document.getElementById(`value-${id}`);
       bubble.innerText = value;
 
-      const percent = (value - slider.min) / (slider.max - slider.min);
       const sliderWidth = slider.offsetWidth;
       const bubbleWidth = bubble.offsetWidth;
-      const offset = percent * (sliderWidth - 20) - bubbleWidth / 2 + 10;
+      const percent = (value - slider.min) / (slider.max - slider.min);
+      const offset = percent * (sliderWidth - 24) - bubbleWidth / 2 + 12;
       bubble.style.left = `${offset}px`;
+
       bubble.style.animation = 'none';
-      bubble.offsetHeight;
-      bubble.style.animation = null;
+      void bubble.offsetWidth; // reset animation
+      bubble.style.animation = 'bounce 0.4s ease';
 
       sendSliderCommand();
     }
