@@ -139,7 +139,8 @@
 
   <script>
     // Connexion WebSocket (adresse adaptée dynamiquement)
-    const socket = new WebSocket(`ws://${location.host}`);
+    const socket = new WebSocket("wss://siteweb-r1pf.onrender.com/");
+
 
     socket.onopen = () => {
       console.log("🟢 WebSocket connecté");
