@@ -196,7 +196,7 @@
 
     function send(data) {
       if (socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify(data));
+        socket.send(JSON.stringify(data) + '\n');
       } else {
         console.warn("WebSocket non prêt, message ignoré.");
       }
