@@ -1,20 +1,25 @@
-// server.js
+// server.js en module ES
 
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
-// Servir les fichiers statiques (HTML, CSS, JS, images)
+// Résolution __dirname en ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rediriger toute autre route vers index.html (utile pour un SPA si nécessaire)
+// Route fallback pour Single Page Apps
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Démarrer le serveur
+// Lancement du serveur
 app.listen(PORT, () => {
   console.log(`🔥 Serveur lancé sur http://localhost:${PORT}`);
 });
