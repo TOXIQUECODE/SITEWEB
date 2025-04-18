@@ -5,27 +5,30 @@ import { WebSocketServer } from 'ws';
 const app = express();
 const port = process.env.PORT || 10000;
 
-// Serve les fichiers statiques si besoin (ex: frontend)
+// Serve les fichiers statiques (facultatif)
 app.use(express.static('public'));
 
 // Crée le serveur HTTP
 const server = http.createServer(app);
 
-// Crée le WebSocketServer
+// Crée le serveur WebSocket
 const wss = new WebSocketServer({ server, path: '/socket' });
 
+// Événement lorsqu'un client se connecte
 wss.on('connection', (ws) => {
   console.log('🔌 Nouveau client WebSocket connecté');
 
+  // Quand un message est reçu
   ws.on('message', (message) => {
     console.log('📨 Message reçu :', message.toString());
 
-    // Répondre si besoin
+    // Répondre si on reçoit "HELLO_ARDUINO"
     if (message.toString() === 'HELLO_ARDUINO') {
       ws.send('HELLO_CLIENT');
     }
   });
 
+  // Quand le client se déconnecte
   ws.on('close', () => {
     console.log('❌ Client WebSocket déconnecté');
   });
