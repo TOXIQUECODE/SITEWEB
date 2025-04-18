@@ -66,14 +66,14 @@ section {
 
 .demon-profile h2 {
   font-size: 1.5rem;
-  color: #ff6666; /* Un rouge doux pour le titre, pour contraster */
+  color: #ef0909; /* Un rouge doux pour le titre, pour contraster */
   margin: 0 0 0.5rem 0; /* Espacement sous le titre */
   text-align: left; /* S'assurer que le texte est bien à gauche */
 }
 
 .demon-profile p {
   font-size: 1rem;
-  color: ##ef0909;
+  color: #ccc;
   margin: 0;
   line-height: 1.4;
 }
