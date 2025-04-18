@@ -193,36 +193,3 @@ nav a.active::after {
 .nav-link.active {
   color: #ff6666;
 }
-.demon-profile {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.demon-profile img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.demon-profile div {
-  flex: 1;
-}
-
-.demon-profile h2 {
-  font-size: 1.5rem;
-  color: #ef0909;
-  margin: 0;
-  text-align: left;
-}
-
-.demon-profile p {
-  font-size: 1rem;
-  color: #ccc;
-}
