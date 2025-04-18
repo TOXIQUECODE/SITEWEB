@@ -10,7 +10,7 @@
   
 <nav class="main-nav">
   <div class="nav-logo">🐶 Démons</div>
-  <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false">&#9776;</button>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Accueil</a>
     <a href="techniques.html" class="nav-link">Techniques</a>
@@ -20,12 +20,10 @@
   </div>
 </nav>
 
-
   <header>
     <h1>Techniques de Dressage</h1>
     <p>Des stratégies approuvées (ou presque) pour canaliser les forces du chaos canin.</p>
   </header>
-
 
   <section class="techniques">
     <div class="technique">
@@ -52,13 +50,24 @@
   <footer>
     &copy; 2025 Dressage des Démons. Tous droits réservés. 🐶🔥
   </footer>
-    <script>
-  const toggleButton = document.querySelector('.menu-toggle');
-  const navLinks = document.querySelector('.nav-links');
 
-  toggleButton.addEventListener('click', () => {
-    navLinks.classList.toggle('show');
-  });
+  <script>
+    const toggleButton = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    toggleButton.addEventListener('click', () => {
+      const isMenuVisible = navLinks.classList.toggle('show');
+      toggleButton.setAttribute('aria-expanded', isMenuVisible ? 'true' : 'false');
+    });
+
+    // Fermeture du menu au clic sur un lien de navigation
+    const navItems = document.querySelectorAll('.nav-link');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navLinks.classList.remove('show');
+        toggleButton.setAttribute('aria-expanded', 'false');
+      });
+    });
   </script>
 </body>
 </html>
