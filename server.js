@@ -20,9 +20,11 @@ wss.on('connection', (ws) => {
 });
 
 // Lancer le serveur HTTPS sur le port 443 (port HTTPS par défaut)
-server.listen(443, () => {
-  console.log('Serveur HTTPS démarré sur le port 443');
+const port = process.env.PORT || 443; // Utiliser le port fourni par Render
+server.listen(port, () => {
+  console.log(`Serveur démarré sur le port ${port}`);
 });
+
 
 // Servir les fichiers statiques dans le dossier 'public'
 app.use(express.static('public'));
