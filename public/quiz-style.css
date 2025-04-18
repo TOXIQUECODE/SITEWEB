@@ -1,79 +1,74 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Global Styles */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    background-color: #f5f5f7;
-    color: #1d1d1f;
-    line-height: 1.6;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
 }
 
-header {
-    text-align: center;
-    padding: 2rem 1rem;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 20px 0;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #ff3e57;
+p {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 40px;
 }
 
-header p {
-    font-size: 1.25rem;
-    color: #666;
-}
-
+/* Quiz Container */
 .quiz-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .question {
-    margin-bottom: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .question p {
-    font-size: 1.25rem;
-    color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .question label {
-    display: block;
-    margin: 0.5rem 0;
-    font-size: 1rem;
-    color: #444;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 button {
-    background-color: #ff3e57;
-    color: #fff;
-    padding: 1rem;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 10px;
+  background-color: #ff3e57;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #e6374a;
+  background-color: #ff1a3e;
 }
 
 .result {
-    margin-top: 2rem;
-    font-size: 1.5rem;
-    text-align: center;
-    font-weight: bold;
-    color: #ff3e57;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .quiz-container {
+    padding: 15px;
+  }
 }
