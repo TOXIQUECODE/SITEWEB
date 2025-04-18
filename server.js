@@ -1,5 +1,4 @@
 const https = require('https');
-const http = require('http');
 const WebSocket = require('ws');
 const express = require('express');
 const app = express();
@@ -23,17 +22,6 @@ wss.on('connection', (ws) => {
 // Lancer le serveur HTTPS sur le port 443 (port HTTPS par défaut)
 server.listen(443, () => {
   console.log('Serveur HTTPS démarré sur le port 443');
-});
-
-// Créer un serveur HTTP pour rediriger les requêtes HTTP vers HTTPS
-const httpServer = http.createServer((req, res) => {
-  res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-  res.end();
-});
-
-// Lancer le serveur HTTP sur le port 80 (port HTTP par défaut) pour la redirection
-httpServer.listen(80, () => {
-  console.log('Serveur HTTP pour redirection vers HTTPS démarré sur le port 80');
 });
 
 // Servir les fichiers statiques dans le dossier 'public'
